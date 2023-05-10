@@ -10,7 +10,7 @@
 </p>
 
  [EN](http://./README.md) |
- [CN](http://./README_CN.md)
+ [中文](http://./README_CN.md)
 
 # Mochi MQTT Broker
 ## The fully compliant, embeddable high-performance Go MQTT v5 (and v3.1.1) broker server 
