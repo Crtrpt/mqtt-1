@@ -13,16 +13,16 @@
  [中文](README_CN.md)
 
 # Mochi MQTT Broker
-## The fully compliant, embeddable high-performance Go MQTT v5 (and v3.1.1) broker server 
-Mochi MQTT is an embeddable [fully compliant](https://docs.oasis-open.org/mqtt/mqtt/v5.0/os/mqtt-v5.0-os.html) MQTT v5 broker server written in Go, designed for the development of telemetry and internet-of-things projects. The server can be used either as a standalone binary or embedded as a library in your own applications, and has been designed to be as lightweight and fast as possible, with great care taken to ensure the quality and maintainability of the project. 
+## 完全兼容、可嵌入的高性能 Go MQTT v5（和 v3.1.1）broker server
+Mochi MQTT 是一个可嵌入的 [完全兼容](https://docs.oasis-open.org/mqtt/mqtt/v5.0/os/mqtt-v5.0-os.html) MQTT v5 broker server，用 Go语言编写， 专为遥测和物联网项目的开发而设计。 该服务器既可以作为独立的二进制文件使用，也可以作为库嵌入您自己的应用程序中，并且被设计为尽可能轻量级和快速，并非常小心地确保项目的质量和可维护性。
 
-### What is MQTT?
-MQTT stands for [MQ Telemetry Transport](https://en.wikipedia.org/wiki/MQTT). It is a publish/subscribe, extremely simple and lightweight messaging protocol, designed for constrained devices and low-bandwidth, high-latency or unreliable networks ([Learn more](https://mqtt.org/faq)). Mochi MQTT fully implements version 5.0.0 of the MQTT protocol.
+### 什么是 MQTT?
+MQTT 代表 [MQ 遥测传输](https://en.wikipedia.org/wiki/MQTT)。 它是一种发布/订阅、极其简单和轻量级的消息传递协议，专为受限设备和低带宽、高延迟或不可靠的网络而设计（[了解更多](https://mqtt.org/faq)）。 Mochi MQTT 完全实现了 MQTT 协议的 5.0.0 版本。
 
-## What's new in Version 2.0.0?
-Version 2.0.0 takes all the great things we loved about Mochi MQTT v1.0.0, learns from the mistakes, and improves on the things we wished we'd had. It's a total from-scratch rewrite, designed to fully implement MQTT v5 as a first-class feature. 
+## Version 2.0.0 有什么新功能?
+2.0.0 版吸收了我们喜爱的 Mochi MQTT v1.0.0 的所有优点，从错误中吸取教训，并改进了我们希望拥有的东西。 它完全是从头开始重写，旨在将 MQTT v5 实现为一类功能。
 
-Don't forget to use the new v2 import paths:
+不要忘记使用新的V2版导入路径:
 ```go
 import "github.com/mochi-co/mqtt/v2"
 ```
@@ -53,19 +53,19 @@ import "github.com/mochi-co/mqtt/v2"
 
 > There is no upgrade path from v1.0.0. Please review the documentation and this readme to get a sense of the changes required (e.g. the v1 events system, auth, and persistence have all been replaced with the new hooks system).
 
-### Compatibility Notes
+### 兼容性说明
 Because of the overlap between the v5 specification and previous versions of mqtt, the server can accept both v5 and v3 clients, but note that in cases where both v5 an v3 clients are connected, properties and features provided for v5 clients will be downgraded for v3 clients (such as user properties).
 
 Support for MQTT v3.0.0 and v3.1.1 is considered hybrid-compatibility. Where not specifically restricted in the v3 specification, more modern and safety-first v5 behaviours are used instead - such as expiry for inflight and retained messages, and clients - and quality-of-service flow control limits.
 
-## Roadmap
+## 路线图
 - Please [open an issue](https://github.com/mochi-co/mqtt/issues) to request new features or event hooks!
-- Cluster support.
-- Enhanced Metrics support.
-- File-based server configuration (supporting docker).
+- 集群支持
+- 指标支持
+- 基于文件的服务器配置(支持docker)
 
-## Quick Start
-### Running the Broker with Go
+## 开始
+### 源码运行
 Mochi MQTT can be used as a standalone broker. Simply checkout this repository and run the [cmd/main.go](cmd/main.go) entrypoint in the [cmd](cmd) folder which will expose tcp (:1883), websocket (:1882), and dashboard (:8080) listeners.
 
 ```
@@ -73,7 +73,7 @@ cd cmd
 go build -o mqtt && ./mqtt
 ```
 
-### Using Docker
+### 使用 Docker
 A simple Dockerfile is provided for running the [cmd/main.go](cmd/main.go) Websocket, TCP, and Stats server:
 
 ```sh
@@ -82,7 +82,7 @@ docker run -p 1883:1883 -p 1882:1882 -p 8080:8080 mochi:latest
 ```
 
 ## Developing with Mochi MQTT
-### Importing as a package
+### 作为一个`package`引入
 Importing Mochi MQTT as a package requires just a few lines of code to get started.
 ``` go
 import (
@@ -116,7 +116,7 @@ func main() {
 
 Examples of running the broker with various configurations can be found in the [examples](examples) folder. 
 
-#### Network Listeners
+#### 网路监听器
 The server comes with a variety of pre-packaged network listeners which allow the broker to accept connections on different protocols. The current listeners are:
 
 | Listener | Usage |
@@ -133,7 +133,7 @@ A `*listeners.Config` may be passed to configure TLS.
 
 Examples of usage can be found in the [examples](examples) folder or [cmd/main.go](cmd/main.go).
 
-### Server Options and Capabilities
+### 服务器配置和能力
 A number of configurable options are available which can be used to alter the behaviour or restrict access to certain features in the server.
 
 ```go
@@ -153,7 +153,7 @@ server := mqtt.New(&mqtt.Options{
 Review the mqtt.Options, mqtt.Capabilities, and mqtt.Compatibilities structs for a comprehensive list of options. `ClientNetWriteBufferSize` and `ClientNetReadBufferSize` can be configured to adjust memory usage per client, based on your needs.
 
 
-## Event Hooks 
+## 事件钩子 
 A universal event hooks system allows developers to hook into various parts of the server and client life cycle to add and modify functionality of the broker. These universal hooks are used to provide everything from authentication, persistent storage, to debugging tools.
 
 Hooks are stackable - you can add multiple hooks to a server, and they will be run in the order they were added. Some hooks modify values, and these modified values will be passed to the subsequent hooks before being returned to the runtime code.
@@ -169,8 +169,8 @@ Hooks are stackable - you can add multiple hooks to a server, and they will be r
 
 Many of the internal server functions are now exposed to developers, so you can make your own Hooks by using the above as examples. If you do, please [Open an issue](https://github.com/mochi-co/mqtt/issues) and let everyone know!
 
-### Access Control 
-#### Allow Hook
+### 访问控制
+#### 启用钩子
 By default, Mochi MQTT uses a DENY-ALL access control rule. To allow connections, this must overwritten using an Access Control hook. The simplest of these hooks is the `auth.AllowAll` hook, which provides ALLOW-ALL rules to all connections, subscriptions, and publishing. It's also the simplest hook to use:
 
 ```go
@@ -180,7 +180,7 @@ _ = server.AddHook(new(auth.AllowHook), nil)
 
 > Don't do this if you are exposing your server to the internet or untrusted networks - it should really be used for development, testing, and debugging only.
 
-#### Auth Ledger
+#### Ledger 授权
 The Auth Ledger hook provides a sophisticated mechanism for defining access rules in a struct format. Auth ledger rules come in two forms: Auth rules (connection), and ACL rules (publish subscribe). 
 
 Auth rules have 4 optional criteria and an assertion flag:
@@ -241,7 +241,7 @@ err = server.AddHook(new(auth.Hook), &auth.Options{
 ```
 See [examples/auth/encoded/main.go](examples/auth/encoded/main.go) for more information.
 
-### Persistent Storage 
+### 持久化存储
 #### Redis
 A basic Redis storage hook is available which provides persistence for the broker. It can be added to the server in the same fashion as any other hook, with several options. It uses github.com/go-redis/redis/v8 under the hook, and is completely configurable through the Options value. 
 ```go
@@ -274,7 +274,7 @@ There is also a BoltDB hook which has been deprecated in favour of Badger, but i
 
 
 
-## Developing with Event Hooks
+## 使用事件钩子 扩展功能
 Many hooks are available for interacting with the broker and client lifecycle. 
 The function signatures for all the hooks and `mqtt.Hook` interface can be found in [hooks.go](hooks.go).
 
@@ -321,7 +321,7 @@ The function signatures for all the hooks and `mqtt.Hook` interface can be found
 If you are building a persistent storage hook, see the existing persistent hooks for inspiration and patterns. If you are building an auth hook, you will need `OnACLCheck` and `OnConnectAuthenticate`.
 
 
-### Direct Publish
+### 直接发布
 To publish basic message to a topic from within the embedding application, you can use the `server.Publish(topic string, payload []byte, retain bool, qos byte) error` method.
 
 ```go
@@ -329,7 +329,7 @@ err := server.Publish("direct/publish", []byte("packet scheduled message"), fals
 ```
 > The Qos byte in this case is only used to set the upper qos limit available for subscribers, as per MQTT v5 spec.
 
-### Packet Injection
+### Packet 注入
 If you want more control, or want to set specific MQTT v5 properties and other values you can create your own publish packets from a client of your choice. This method allows you to inject MQTT packets (no just publish) directly into the runtime as though they had been received by a specific client. Most of the time you'll want to use the special client flag `inline=true`, as it has unique privileges: it bypasses all ACL and topic validation checks, meaning it can even publish to $SYS topics. 
 
 Packet injection can be used for any MQTT packet, including ping requests, subscriptions, etc. And because the Clients structs and methods are now exported, you can even inject packets on behalf of a connected client (if you have a very custom requirements).
@@ -351,8 +351,8 @@ See the [hooks example](examples/hooks/main.go) to see this feature in action.
 
 
 
-### Testing
-#### Unit Tests
+### 测试
+#### 单元测试
 Mochi MQTT tests over a thousand scenarios with thoughtfully hand written unit tests to ensure each function does exactly what we expect. You can run the tests using go:
 ```
 go run --cover ./...
@@ -364,7 +364,7 @@ You can check the broker against the [Paho Interoperability Test](https://github
 > Note that there are currently a number of outstanding issues regarding false negatives in the paho suite, and as such, certain compatibility modes are enabled in the `paho/main.go` example.
 
 
-## Performance Benchmarks
+## 基准测试
 Mochi MQTT performance is comparable with popular brokers such as Mosquitto, EMQX, and others.
 
 Performance benchmarks were tested using [MQTT-Stresser](https://github.com/inovex/mqtt-stresser) on a Apple Macbook Air M2, using `cmd/main.go` default settings. Taking into account bursts of high and low throughput, the median scores are the most useful. Higher is better.
@@ -399,9 +399,9 @@ Million Message Challenge (hit the server with 1 million messages immediately):
 
 ## Stargazers over time 🥰
 [![Stargazers over time](https://starchart.cc/mochi-co/mqtt.svg)](https://starchart.cc/mochi-co/mqtt)
-Are you using Mochi MQTT in a project? [Let us know!](https://github.com/mochi-co/mqtt/issues)
+你在项目中使用了Mochi MQTT吗？? [让我们知道!](https://github.com/mochi-co/mqtt/issues)
 
-## Contributions
+## 如何参与
 Contributions and feedback are both welcomed and encouraged! [Open an issue](https://github.com/mochi-co/mqtt/issues) to report a bug, ask a question, or make a feature request.
 
 
