@@ -158,7 +158,7 @@ A universal event hooks system allows developers to hook into various parts of t
 
 Hooks are stackable - you can add multiple hooks to a server, and they will be run in the order they were added. Some hooks modify values, and these modified values will be passed to the subsequent hooks before being returned to the runtime code.
 
-| Type | Import | Info |
+| 类型 | 导入 | 描述 |
 | -- | -- |  -- |
 | Access Control | [mochi-co/mqtt/hooks/auth . AllowHook](hooks/auth/allow_all.go) | Allow access to all connecting clients and read/write to  all topics. | 
 | Access Control | [mochi-co/mqtt/hooks/auth . Auth](hooks/auth/auth.go) | Rule-based access control ledger.  | 
@@ -239,7 +239,7 @@ err = server.AddHook(new(auth.Hook), &auth.Options{
     Data: data, // build ledger from byte slice: yaml or json
 })
 ```
-See [examples/auth/encoded/main.go](examples/auth/encoded/main.go) for more information.
+查看 [examples/auth/encoded/main.go](examples/auth/encoded/main.go) 获取更多信息
 
 ### 持久化存储
 #### Redis
@@ -280,10 +280,10 @@ The function signatures for all the hooks and `mqtt.Hook` interface can be found
 
 > The most flexible event hooks are OnPacketRead, OnPacketEncode, and OnPacketSent - these hooks be used to control and modify all incoming and outgoing packets.
 
-| Function | Usage | 
+| Function | 使用方法 | 
 | -------------------------- | -- |
-| OnStarted | Called when the server has successfully started.|
-| OnStopped | Called when the server has successfully stopped. | 
+| OnStarted | 服务器启动成功的时候调用|
+| OnStopped | 服务器成功停止的时候调用 | 
 | OnConnectAuthenticate | Called when a user attempts to authenticate with the server. An implementation of this method MUST be used to allow or deny access to the server (see hooks/auth/allow_all or basic). It can be used in custom hooks to check connecting users against an existing user database. Returns true if allowed. |
 | OnACLCheck | Called when a user attempts to publish or subscribe to a topic filter. As above. |
 | OnSysInfoTick | Called when the $SYS topic values are published out. |
